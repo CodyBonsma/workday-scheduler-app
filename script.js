@@ -6,12 +6,27 @@ $(document).ready(function(){
 // variable array with the different time slots 
 var hourId = ["9AM", "10AM", "11AM", "12PM", "1PM", "2PM", "3PM", "4PM", "5PM"];
 
-var rowEl = $("<div>");
-rowEl.addClass("row time-block col-sm-1");
-rowEl.text(hourId[0]);
-$(".container").append(rowEl);
-
-
+for(var i = 0; i < hourId.length; i++){
+    //create the main row div 
+    var rowEl = $("<row>");
+    rowEl.addClass("main-row");
+    $(".container").append(rowEl);
+    //create a time element div col-sm-1
+    var timeEl = $("<div>");
+    timeEl.addClass("time-block hour col-sm-1");
+    timeEl.text(hourId[i]);
+    rowEl.append(timeEl);
+    //create a div to hold the text/todo list area col-sm-10
+    var textEl = $("<textarea>");
+    textEl.addClass("text-area col-sm-10");
+    textEl.attr("placeholder", "put you shit in here");
+    rowEl.append(textEl);
+    //create the save button div element col-sm-1
+    var saveEl = $("<div>");
+    saveEl.addClass("saveBtn time-block col-sm-1");
+    rowEl.append(saveEl);
+   
+}
 
 });
 
