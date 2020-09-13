@@ -60,7 +60,7 @@ $(document).ready(function () {
       textEl.addClass("future");
     }
   }
-});
+
 // adjusting for AM and PM
 function compareTime(timeOne, timeTwo) {
   if (timeOne.slice(-2) === "PM") {
@@ -101,3 +101,5 @@ function save() {
   console.log(saveText);
   localStorage.setItem(saveHourId, saveText);
 }
+
+});
