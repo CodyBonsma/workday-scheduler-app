@@ -1,16 +1,15 @@
 $(document).ready(function () {
-  var currentDayEl = $("<h2>");
+    // currentDayEl connected with moment.js to show in the top of the page 
+  var currentDayEl = $("<h3>");
   currentDayEl.text(moment().format("dddd, MMMM Do YYYY"));
   $("#currentDay").append(currentDayEl);
-
+    // current hour variable for the conditionals 
   var currentHour = parseInt(moment().format("h"));
   console.log(currentHour);
-
+    // current hour variable for AM/PM matching
   var currentHourTag = moment().format("hA");
 
-
   // create time blocks for standard business hours 9am - 5pm (9blocks)
-  // each block should be a row and have a col 1 (hour) col 10 (text) col 1 (lock)
 
   // variable array with the different time slots
   var hourId = [
@@ -28,42 +27,41 @@ $(document).ready(function () {
   for (var i = 0; i < hourId.length; i++) {
     //create the main row div
     var rowEl = $("<row>");
-    rowEl.addClass("main-row");
+    rowEl.addClass("main-row d-sm-flex");
     rowEl.addClass(hourId[i]);
     $(".container").append(rowEl);
-    //create a time element div col-sm-1
+    //create a time element 
     var timeEl = $("<div>");
-    timeEl.addClass("time-block hour hour-plc col-sm-1");
+    timeEl.addClass("time-block hour col-md-2");
     timeEl.text(hourId[i]);
     rowEl.append(timeEl);
-    //create a div to hold the text/todo list area col-sm-10
+    //create a div to hold the text/todo list area
     var textEl = $("<textarea>");
-    textEl.addClass("text-area col-sm-10");
+    textEl.addClass("text-area col-md-8");
     textEl.attr("id", hourId[i]);
     textEl.text(localStorage.getItem(hourId[i]));
     rowEl.append(textEl);
-    //create the save button div element col-sm-1
+    //create the save button div element 
     var saveEl = $("<div>");
-    saveEl.addClass("saveBtn time-block col-sm-1 text-area");
+    saveEl.addClass(
+      "saveBtn time-block i:hover fas fa-lock col-md-2 text-area"
+    );
     saveEl.attr("id", hourId[i]);
-    saveEl.attr("style", "float");
-    saveEl.text("BUTTON");
     saveEl.click(save);
     rowEl.append(saveEl);
 
     console.log(parseInt(hourId[i].slice(0, -2)));
-
+    // conditionals to see whether the time is past, current or present
     if (compareTime(hourId[i], currentHourTag) === 0) {
       textEl.addClass("present");
-    } else if (compareTime(hourId[i], currentHourTag) > 0) {
-      textEl.addClass("past");
     } else if (compareTime(hourId[i], currentHourTag) < 0) {
+      textEl.addClass("past");
+    } else if (compareTime(hourId[i], currentHourTag) > 0) {
       textEl.addClass("future");
     }
   }
-  // parseInt(hourId[i].slice(0, -2)) === currentHour
 });
-
+// adjusting for AM and PM
 function compareTime(timeOne, timeTwo) {
   if (timeOne.slice(-2) === "PM") {
     if (parseInt(timeOne.slice(0, -2)) === 12) {
@@ -72,11 +70,11 @@ function compareTime(timeOne, timeTwo) {
       timeOne = parseInt(timeOne.slice(0, -2) + 12);
     }
   } else {
-      if (parseInt(timeOne.slice(0, -2)) === 12){
-        timeOne = parseInt(timeOne.slice(0, -2) + 12);
-      } else {
-        timeOne = parseInt(timeOne.slice(0, -2));
-      }
+    if (parseInt(timeOne.slice(0, -2)) === 12) {
+      timeOne = parseInt(timeOne.slice(0, -2) + 12);
+    } else {
+      timeOne = parseInt(timeOne.slice(0, -2));
+    }
   }
   if (timeTwo.slice(-2) === "PM") {
     if (parseInt(timeTwo.slice(0, -2)) === 12) {
@@ -85,11 +83,11 @@ function compareTime(timeOne, timeTwo) {
       timeTwo = parseInt(timeTwo.slice(0, -2) + 12);
     }
   } else {
-    if (parseInt(timeTwo.slice(0, -2)) === 12){
-        timeTwo = parseInt(timeTwo.slice(0, -2) + 12);
-      } else {
-        timeTwo = parseInt(timeTwo.slice(0, -2));
-      }
+    if (parseInt(timeTwo.slice(0, -2)) === 12) {
+      timeTwo = parseInt(timeTwo.slice(0, -2) + 12);
+    } else {
+      timeTwo = parseInt(timeTwo.slice(0, -2));
+    }
   }
   return timeOne - timeTwo;
 }
