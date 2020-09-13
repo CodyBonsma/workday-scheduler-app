@@ -22,7 +22,7 @@ for(var i = 0; i < hourId.length; i++){
     //create a div to hold the text/todo list area col-sm-10
     var textEl = $("<textarea>");
     textEl.addClass("text-area col-sm-10");
-    textEl.addClass(hourId[i]);
+    textEl.attr("id", hourId[i]);
     textEl.attr("placeholder", "put you shit in here");
     rowEl.append(textEl);
     //create the save button div element col-sm-1
@@ -44,8 +44,9 @@ for(var i = 0; i < hourId.length; i++){
 
 
 function save (){
-  var thisHourId =  $(this).attr("id");
-console.log(thisHourId);
-    
-console.log("haha");
+  var saveHourId =  $(this).attr("id");
+console.log(saveHourId);
+var saveText = $("#" + saveHourId).val();
+console.log(saveText);
+localStorage.setItem( saveHourId, saveText); 
 }
