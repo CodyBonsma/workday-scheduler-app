@@ -1,5 +1,12 @@
 $(document).ready(function(){
-    
+
+      var currentDayEl = $("<h2>");
+      currentDayEl.text(moment().format("dddd, MMMM Do YYYY"));
+      $("#currentDay").append(currentDayEl);
+
+      var currentHour = moment().format("hA");
+      console.log(currentHour);
+
 // create time blocks for standard business hours 9am - 5pm (9blocks)
 // each block should be a row and have a col 1 (hour) col 10 (text) col 1 (lock)
 
@@ -23,7 +30,7 @@ for(var i = 0; i < hourId.length; i++){
     var textEl = $("<textarea>");
     textEl.addClass("text-area col-sm-10");
     textEl.attr("id", hourId[i]);
-    textEl.attr("placeholder", "put you shit in here");
+    textEl.text(localStorage.getItem(hourId[i]));
     rowEl.append(textEl);
     //create the save button div element col-sm-1
     var saveEl = $("<div>");
@@ -33,6 +40,8 @@ for(var i = 0; i < hourId.length; i++){
     saveEl.text("BUTTON");
     saveEl.click(save);
     rowEl.append(saveEl);
+
+
 
 }
 
